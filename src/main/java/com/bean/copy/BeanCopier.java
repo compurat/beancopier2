@@ -6,25 +6,29 @@ import lombok.extern.slf4j.Slf4j;
 import java.lang.reflect.Field;
 
 @Slf4j
-class BeanCopier {
+public class BeanCopier {
 
 
-    void beanCopy(final Object copyFrom, final Object copyTo) {
+    public void beanCopy(final Object copyFrom, final Object copyTo) {
         Field[] fields = copyFrom.getClass().getDeclaredFields();
         for(Field field : fields) {
             Copy copy = field.getAnnotation(Copy.class);
             if( copy != null) {
-                addValueToField(copyTo, field, copy.copyTo());
+                addValueToField(copyFrom,copyTo, field, copy.copyTo());
             } else {
-                addValueToField(copyTo, field, copy.copyTo());
+                addValueToField(copyFrom, copyTo, field, field.getName());
             }
         }
     }
 
-    private void addValueToField(final Object copyTo, final Field field, String name) {
+    private void addValueToField(final Object copyFrom, final Object copyTo, final Field field, final String name) {
         try {
-            Field copyToField = copyTo.getClass().getField(name);
-            copyToField.set(copyTo, field);
+            Field copyToField = copyTo.getClass().getDeclaredField(name);
+            copyToField.setAccessible(true);
+            field.setAccessible(true);
+            copyToField.set(copyTo, field.get(copyFrom));
+            copyToField.setAccessible(false);
+            field.setAccessible(false);
         } catch (NoSuchFieldException e) {
             log.error("could not find field " + name);
             e.printStackTrace();

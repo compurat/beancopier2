@@ -17,7 +17,6 @@ public class BeanCopierTest {
 
     @Before
     public void init() {
-        ReadAnnotation readAnnotation = new ReadAnnotation();
         testBean.setTestString(TEST_STRING_WITH_ANNOTATION);
         testBean.setTestStringNoAnnotation(TEST_STRING_NO_ANNOTATION);
         beanBeanCopier = new BeanCopier();
@@ -27,7 +26,7 @@ public class BeanCopierTest {
     @Test
     public void testBeanCopyWithAnnotation() {
         beanBeanCopier.beanCopy(testBean,emptyTestBean);
-        //Assert.assertTrue(TEST_STRING_WITH_ANNOTATION.equals(emptyTestBean.getTestString2()));
+        Assert.assertTrue(TEST_STRING_WITH_ANNOTATION.equals(emptyTestBean.getTestString2()));
 
     }
 
