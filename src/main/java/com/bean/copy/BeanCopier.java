@@ -19,8 +19,6 @@ class BeanCopier {
                 addValueToField(copyTo, field, copy.copyTo());
             }
         }
-
-
     }
 
     private void addValueToField(Object copyTo, Field field, String name) {
@@ -28,8 +26,10 @@ class BeanCopier {
             Field copyToField = copyTo.getClass().getField(name);
             copyToField.set(copyTo, field);
         } catch (NoSuchFieldException e) {
+            log.error("could not find field");
             e.printStackTrace();
         } catch (IllegalAccessException e) {
+            log.error("could not access field");
             e.printStackTrace();
         }
     }
