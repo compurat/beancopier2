@@ -5,10 +5,19 @@ import lombok.extern.slf4j.Slf4j;
 
 import java.lang.reflect.Field;
 
+/**
+ * this class converts one bean to another.
+ */
 @Slf4j
 public class BeanCopier {
 
 
+    /**
+     * This method detects if the fieldnames are the same or from the {@link Copy} annotation.
+     * After that it calls the addValueToField method and copies the values from one bean to the other.
+     * @param copyFrom the bean that contains the values.
+     * @param copyTo the bean where the values should be copied to.
+     */
     public void beanCopy(final Object copyFrom, final Object copyTo) {
         Field[] fields = copyFrom.getClass().getDeclaredFields();
         for(Field field : fields) {
@@ -21,6 +30,13 @@ public class BeanCopier {
         }
     }
 
+    /**
+     * this method copies the actual values.
+     * @param copyFrom the bean that contains the values.
+     * @param copyTo the bean where the values should be copied to.
+     * @param field the field that contains the value to be copied.
+     * @param name the field name to search for in the copyTo bean.
+     */
     private void addValueToField(final Object copyFrom, final Object copyTo, final Field field, final String name) {
         try {
             Field copyToField = copyTo.getClass().getDeclaredField(name);
