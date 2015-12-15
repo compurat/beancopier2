@@ -21,15 +21,15 @@ class BeanCopier {
         }
     }
 
-    private void addValueToField(Object copyTo, Field field, String name) {
+    private void addValueToField(final Object copyTo, final Field field, String name) {
         try {
             Field copyToField = copyTo.getClass().getField(name);
             copyToField.set(copyTo, field);
         } catch (NoSuchFieldException e) {
-            log.error("could not find field");
+            log.error("could not find field " + name);
             e.printStackTrace();
         } catch (IllegalAccessException e) {
-            log.error("could not access field");
+            log.error("could not access field " + name);
             e.printStackTrace();
         }
     }
