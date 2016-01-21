@@ -7,6 +7,7 @@ public class EmptyTestBean {
 
     private String testString2;
     private String testStringNoAnnotation;
+    private String ignore;
 
     public String getTestString2() {
         return testString2;
@@ -22,5 +23,13 @@ public class EmptyTestBean {
 
     public void setTestStringNoAnnotation(String testStringNoAnnotation) {
         this.testStringNoAnnotation = testStringNoAnnotation;
+    }
+
+    public String getIgnore() {
+        return ignore;
+    }
+
+    public void setIgnore(String ignore) {
+        this.ignore = ignore;
     }
 }

@@ -19,13 +19,14 @@ public class BeanCopierTest {
     public void init() {
         testBean.setTestString(TEST_STRING_WITH_ANNOTATION);
         testBean.setTestStringNoAnnotation(TEST_STRING_NO_ANNOTATION);
+        testBean.setIgnore("ignore");
         beanBeanCopier = new BeanCopier();
+        beanBeanCopier.beanCopy(testBean,emptyTestBean);
 
     }
 
     @Test
     public void testBeanCopyWithAnnotation() {
-        beanBeanCopier.beanCopy(testBean,emptyTestBean);
         Assert.assertTrue(TEST_STRING_WITH_ANNOTATION.equals(emptyTestBean.getTestString2()));
 
     }
@@ -34,6 +35,13 @@ public class BeanCopierTest {
     public void testBeanCopyWithNoAnnotation() {
         beanBeanCopier.beanCopy(testBean,emptyTestBean);
         Assert.assertTrue(TEST_STRING_NO_ANNOTATION.equals(emptyTestBean.getTestStringNoAnnotation()));
+
+    }
+
+    @Test
+    public void testBeanCopyWithIgnore() {
+        beanBeanCopier.beanCopy(testBean,emptyTestBean);
+        Assert.assertNull(emptyTestBean.getIgnore());
 
     }
 

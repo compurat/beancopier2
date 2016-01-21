@@ -1,6 +1,7 @@
 package com.bean.copy;
 
 import com.bean.copy.annotation.Copy;
+import com.bean.copy.annotation.IgnoreCopy;
 import lombok.extern.slf4j.Slf4j;
 
 import java.lang.reflect.Field;
@@ -22,10 +23,13 @@ public class BeanCopier {
         Field[] fields = copyFrom.getClass().getDeclaredFields();
         for(Field field : fields) {
             Copy copy = field.getAnnotation(Copy.class);
-            if( copy != null) {
-                addValueToField(copyFrom,copyTo, field, copy.copyTo());
-            } else {
-                addValueToField(copyFrom, copyTo, field, field.getName());
+            IgnoreCopy ignoreCopy = field.getAnnotation(IgnoreCopy.class);
+            if (ignoreCopy == null) {
+                if( copy != null) {
+                    addValueToField(copyFrom,copyTo, field, copy.copyTo());
+                } else {
+                    addValueToField(copyFrom, copyTo, field, field.getName());
+                }
             }
         }
     }
