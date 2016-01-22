@@ -24,14 +24,38 @@ public class BeanCopier {
         for(Field field : fields) {
             Copy copy = field.getAnnotation(Copy.class);
             IgnoreCopy ignoreCopy = field.getAnnotation(IgnoreCopy.class);
-            if (ignoreCopy == null) {
-                if( copy != null) {
-                    addValueToField(copyFrom,copyTo, field, copy.copyTo());
-                } else {
-                    addValueToField(copyFrom, copyTo, field, field.getName());
-                }
+            String fieldName = null;
+            if (copy != null) {
+                fieldName = copy.copyTo();
+            } else {
+                fieldName = field.getName();
+            }
+            boolean ignoreCopyFromCopyTo = ignoreCopyToField(copyTo, fieldName);
+            checkAndAddValues(copyFrom, copyTo, field, copy, ignoreCopy, ignoreCopyFromCopyTo);
+        }
+    }
+
+    private void checkAndAddValues(Object copyFrom, Object copyTo, Field field, Copy copy, IgnoreCopy ignoreCopy, boolean ignoreCopyFromCopyTo) {
+        if (ignoreCopy == null && ignoreCopyFromCopyTo == false) {
+            if( copy != null) {
+                addValueToField(copyFrom,copyTo, field, copy.copyTo());
+            } else {
+                addValueToField(copyFrom, copyTo, field, field.getName());
             }
         }
+    }
+
+
+    private boolean ignoreCopyToField(final Object copyTo, final String fieldName) {
+        Field field = null;
+        Field[] fields = copyTo.getClass().getDeclaredFields();
+            try {
+                field = copyTo.getClass().getDeclaredField(fieldName);
+            } catch (NoSuchFieldException e) {
+                e.printStackTrace();
+            }
+
+            return field.getAnnotation(IgnoreCopy.class) != null;
     }
 
     /**

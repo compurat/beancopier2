@@ -27,13 +27,12 @@ public class BeanCopierTest {
 
     @Test
     public void testBeanCopyWithAnnotation() {
-        Assert.assertTrue(TEST_STRING_WITH_ANNOTATION.equals(emptyTestBean.getTestString2()));
+        Assert.assertNull(emptyTestBean.getTestString2());
 
     }
 
     @Test
     public void testBeanCopyWithNoAnnotation() {
-        beanBeanCopier.beanCopy(testBean,emptyTestBean);
         Assert.assertTrue(TEST_STRING_NO_ANNOTATION.equals(emptyTestBean.getTestStringNoAnnotation()));
 
     }

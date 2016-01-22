@@ -1,10 +1,13 @@
 package com.bean.copy;
 
+import com.bean.copy.annotation.IgnoreCopy;
+
 /**
  * Created by compurat on 12/14/15.
  */
 public class EmptyTestBean {
 
+    @IgnoreCopy
     private String testString2;
     private String testStringNoAnnotation;
     private String ignore;
