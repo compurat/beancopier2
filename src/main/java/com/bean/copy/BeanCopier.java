@@ -2,7 +2,8 @@ package com.bean.copy;
 
 import com.bean.copy.annotation.Copy;
 import com.bean.copy.annotation.IgnoreCopy;
-import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -11,9 +12,9 @@ import java.util.List;
 /**
  * this class converts one bean to another.
  */
-@Slf4j
-public class BeanCopier {
 
+public class BeanCopier {
+private static final Logger LOGGER = LoggerFactory.getLogger(BeanCopier.class);
 
     /**
      * This method detects if the fieldnames are the same or from the {@link Copy} annotation.
@@ -47,7 +48,12 @@ public class BeanCopier {
         }
     }
 
-
+    /**
+     * checks if ignorefield is set in the target.class
+     * @param copyTo the target class.
+     * @param fieldName the fieldname to be set.
+     * @return a boolean if the field is right to set.
+     */
     private boolean ignoreCopyToField(final Object copyTo, final String fieldName) {
         Field field = null;
         List<String> fieldNames = checkFieldExists(copyTo);
@@ -58,12 +64,17 @@ public class BeanCopier {
                     ignoreCopy = field.getAnnotation(IgnoreCopy.class);
                 }
             } catch (NoSuchFieldException e) {
-                e.printStackTrace();
+                LOGGER.error("could not find field " + fieldName,e);
             }
 
             return  ignoreCopy != null;
     }
 
+    /**
+     * creates a list that has all the fieldnames in it.
+     * @param copyTo the target class
+     * @return a list that has all the fieldnames in it
+     */
     private List<String> checkFieldExists(Object copyTo) {
         List<String> fieldNames = new ArrayList<String>();
         Field[] fields = copyTo.getClass().getDeclaredFields();
@@ -94,11 +105,9 @@ public class BeanCopier {
                 }
             }
         } catch (NoSuchFieldException e) {
-            log.error("could not find field " + name);
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
-            log.error("could not access field " + name);
-            e.printStackTrace();
+            LOGGER.error("could not find field " + name,e);
+            } catch (IllegalAccessException e) {
+            LOGGER.error("could not access field " + name, e);
         }
     }
 }
