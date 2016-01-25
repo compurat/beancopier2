@@ -13,6 +13,8 @@ public class TestBean {
 
     private String testStringNoAnnotation;
 
+    private String notInSourceBean;
+
     @IgnoreCopy
     private String ignore;
 
@@ -38,5 +40,13 @@ public class TestBean {
 
     public void setIgnore(String ignore) {
         this.ignore = ignore;
+    }
+
+    public String getNotInSourceBean() {
+        return notInSourceBean;
+    }
+
+    public void setNotInSourceBean(String notInSourceBean) {
+        this.notInSourceBean = notInSourceBean;
     }
 }

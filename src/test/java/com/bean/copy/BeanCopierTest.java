@@ -20,6 +20,7 @@ public class BeanCopierTest {
         testBean.setTestString(TEST_STRING_WITH_ANNOTATION);
         testBean.setTestStringNoAnnotation(TEST_STRING_NO_ANNOTATION);
         testBean.setIgnore("ignore");
+        testBean.setNotInSourceBean("not");
         beanBeanCopier = new BeanCopier();
         beanBeanCopier.beanCopy(testBean,emptyTestBean);
 
