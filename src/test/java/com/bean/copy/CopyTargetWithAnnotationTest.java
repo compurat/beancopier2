@@ -10,6 +10,6 @@ public class CopyTargetWithAnnotationTest {
     @Test
     public void testSearch() {
         CopyTargetWithAnnotation copyTargetWithAnnotation = new CopyTargetWithAnnotation();
-        copyTargetWithAnnotation.copy();
+        copyTargetWithAnnotation.copy("BeanCopier");
     }
 }

@@ -27,7 +27,7 @@ private static final Logger LOGGER = LoggerFactory.getLogger(BeanCopier.class);
         for(Field field : fields) {
             Copy copy = field.getAnnotation(Copy.class);
             IgnoreCopy ignoreCopy = field.getAnnotation(IgnoreCopy.class);
-            String fieldName = null;
+            String fieldName;
             if (copy != null) {
                 fieldName = copy.copyTo();
             } else {
@@ -55,7 +55,7 @@ private static final Logger LOGGER = LoggerFactory.getLogger(BeanCopier.class);
      * @return a boolean if the field is right to set.
      */
     private boolean ignoreCopyToField(final Object copyTo, final String fieldName) {
-        Field field = null;
+        Field field;
         List<String> fieldNames = checkFieldExists(copyTo);
             IgnoreCopy ignoreCopy = null;
             try {
